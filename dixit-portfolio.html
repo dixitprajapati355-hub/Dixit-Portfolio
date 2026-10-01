@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="description" content="Dixit — Communication Designer. Branding, strategy, positioning and visual identity.">
+<title>Dixit — Communication Designer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=block');
+
+:root{
+  --bg:#f2efe8;
+  --ink:#161616;
+  --muted:#77746d;
+  --line:rgba(22,22,22,.16);
+  --panel:#e4e0d7;
+  --accent:#c9ff39;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --serif: Georgia, "Times New Roman", serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Manrope,system-ui,sans-serif;overflow-x:hidden;
+  cursor:none;
+}
+body.loading{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:var(--ink);color:var(--bg)}
+
+
+
+
+
+.cursor{
+  position:fixed;left:50%;top:50%;width:7px;height:7px;border-radius:50%;
+  background:#8b8983;pointer-events:none;z-index:999;transform:translate(-50%,-50%);
+  transition:width .45s var(--ease),height .45s var(--ease),background .35s ease,transform .45s var(--ease);
+}
+body.cursor-project .cursor{
+  width:108px;height:108px;background:var(--ink);transform:translate(-50%,-50%);
+}
+body.cursor-project .cursor:after{
+  content:'VIEW PROJECT ↗';position:absolute;inset:0;display:grid;place-items:center;
+  color:#fff;font:10px "DM Mono",monospace;letter-spacing:.05em;text-transform:uppercase;
+  text-align:center;white-space:nowrap;
+}
+body.cursor-cta .cursor{
+  width:70px;height:70px;background:var(--accent);
+}
+body.cursor-cta .cursor:after{
+  content:'↗';position:absolute;inset:0;display:grid;place-items:center;
+  color:var(--ink);font:18px "DM Mono",monospace;
+}
+
+.noise{
+  position:fixed;inset:-50%;z-index:20;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+  animation:noise .2s steps(2) infinite;
+}
+@keyframes noise{0%{transform:translate(0,0)}25%{transform:translate(2%,-1%)}50%{transform:translate(-1%,2%)}75%{transform:translate(1%,1%)}100%{transform:translate(-2%,-2%)}}
+
+header{
+  position:fixed;top:0;left:0;right:0;height:76px;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;padding:0 3vw;
+  mix-blend-mode:difference;color:white;
+}
+.logo{font-weight:800;letter-spacing:-.07em;font-size:18px}
+.nav{display:flex;gap:26px;font:10px "DM Mono",monospace;text-transform:uppercase}
+.nav a{position:relative}
+.nav a:after{content:"";position:absolute;left:0;bottom:-5px;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.nav a:hover:after{transform:scaleX(1);transform-origin:left}
+
+main{position:relative}
+section{position:relative;padding:0 5vw}
+.hero{
+  min-height:100svh;display:grid;align-content:end;padding-bottom:7vh;
+  overflow:hidden;
+}
+.hero-top{position:absolute;top:108px;left:5vw;right:5vw;display:flex;justify-content:space-between}
+.eyebrow,.meta{font:10px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.06em}
+.hero-copy{position:relative;z-index:2;max-width:1200px}
+.hero h1{
+  margin:0;font-size:clamp(5.5rem,16vw,17rem);font-weight:800;letter-spacing:-.095em;
+  line-height:.76;transform:translateY(35px);opacity:0;
+}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:1px var(--ink)}
+.hero-sub{
+  margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:4vw;
+  max-width:850px;opacity:1;transform:none
+}
+.hero-sub p{font-size:clamp(1rem,1.35vw,1.25rem);line-height:1.4;margin:0;max-width:580px}
+.hero-side{font:11px "DM Mono",monospace;line-height:1.5;max-width:190px}
+.scroll-cue{
+  position:absolute;right:5vw;bottom:7vh;font:10px "DM Mono",monospace;
+  writing-mode:vertical-rl;text-transform:uppercase;display:flex;gap:12px;align-items:center;
+}
+.scroll-cue:after{content:"";width:1px;height:70px;background:var(--ink);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{height:35px;opacity:.35}}
+
+}
+
+.intro{padding-top:18vh;padding-bottom:18vh;display:grid;grid-template-columns:2fr 1fr;gap:10vw}
+.section-label{font:10px "DM Mono",monospace;text-transform:uppercase;color:var(--muted)}
+.statement{
+  font-size:clamp(2.5rem,5.7vw,6.6rem);line-height:.94;letter-spacing:-.065em;margin:0;
+  max-width:1000px;
+}
+.statement em{font-family:var(--serif);font-weight:400}
+.intro-detail{align-self:end;color:#5e5b55;line-height:1.6;font-size:14px;max-width:300px}
+
+.work{padding-top:10vh}
+.work-head{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line);padding-bottom:24px}
+.work-head h2{font-size:clamp(2.2rem,4.5vw,5rem);letter-spacing:-.06em;margin:0;font-weight:700}
+.index{display:flex;gap:8px;font:10px "DM Mono",monospace}
+.index span{opacity:.35}.index span.active{opacity:1}
+
+.project{
+  padding:13vh 0;display:grid;grid-template-columns:1fr 2.2fr;gap:5vw;
+  border-bottom:1px solid var(--line);min-height:760px;align-items:center;
+}
+.project.reverse{grid-template-columns:2.2fr 1fr}
+.project.reverse .project-info{order:2}
+.project.reverse .visual{order:1}
+.project-info{position:relative;z-index:2}
+.project-number{font:10px "DM Mono",monospace;color:var(--muted);margin-bottom:25px}
+.project h3{font-size:clamp(3rem,7vw,8rem);line-height:.82;letter-spacing:-.08em;margin:0 0 28px}
+.project-desc{max-width:350px;color:#65625b;font-size:13px;line-height:1.6}
+.project-meta{font:10px "DM Mono",monospace;text-transform:uppercase;margin-top:30px;display:flex;gap:15px;color:var(--muted)}
+.view-link{
+  display:inline-flex;align-items:center;gap:10px;margin-top:34px;font:10px "DM Mono",monospace;
+  text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:8px;
+  transition:gap .45s var(--ease)
+}
+.view-link:hover{gap:22px}
+.visual{
+  position:relative;min-height:580px;overflow:hidden;background:var(--panel);
+  clip-path:inset(7% 7% 7% 7%);
+  transition:clip-path 1s var(--ease);
+}
+.project.is-visible .visual{clip-path:inset(0)}
+.visual-inner{
+  position:absolute;inset:0;transition:transform 1.2s var(--ease),filter .8s ease;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(255,255,255,.9),transparent 22%),
+    linear-gradient(125deg,#d9d3c7 0%,#9e9a92 48%,#2c2b29 100%);
+}
+.visual.v2 .visual-inner{background:linear-gradient(135deg,#d6d9d2,#8b9288 48%,#202522)}
+.visual.v3 .visual-inner{background:radial-gradient(circle at 65% 35%,#eee5d6 0 10%,transparent 11%),linear-gradient(120deg,#b8b1a4,#4e4b46)}
+.visual.v4 .visual-inner{background:linear-gradient(155deg,#dedfdc 0 38%,#b4b5ae 39% 65%,#393a37 66%)}
+.visual:after{
+  content:"PROJECT IMAGE / REPLACE";position:absolute;inset:auto 20px 18px;
+  font:9px "DM Mono",monospace;color:rgba(255,255,255,.7);letter-spacing:.1em
+}
+.project:hover .visual-inner{transform:scale(1.045) translate3d(1%,-1%,0);filter:contrast(1.04)}
+.project:hover h3{transform:translateX(6px)}
+.project h3{transition:transform .6s var(--ease)}
+
+.pause{
+  padding:18vh 5vw;min-height:80vh;display:flex;align-items:center;
+  border-bottom:1px solid var(--line)
+}
+.pause-inner{max-width:1100px}
+.pause .statement{font-size:clamp(3.4rem,7vw,8.5rem)}
+.pause .tiny{margin-top:60px;font:10px "DM Mono",monospace;color:var(--muted)}
+
+.explore{padding-top:17vh;padding-bottom:15vh}
+.explore-head{display:grid;grid-template-columns:1fr 2fr;gap:6vw;margin-bottom:8vh}
+.explore-title{font-size:clamp(2.5rem,5vw,5.5rem);letter-spacing:-.07em;line-height:.9;margin:0}
+.explore-copy{max-width:470px;line-height:1.55;color:#66635c;font-size:14px}
+.grid{
+  display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:7vw;gap:14px;
+}
+.tile{position:relative;overflow:hidden;background:#d7d3ca;cursor:none}
+.tile:nth-child(1){grid-column:1/5;grid-row:1/6}
+.tile:nth-child(2){grid-column:5/9;grid-row:1/4}
+.tile:nth-child(3){grid-column:9/13;grid-row:1/7}
+.tile:nth-child(4){grid-column:5/9;grid-row:4/9}
+.tile:nth-child(5){grid-column:1/5;grid-row:6/10}
+.tile:nth-child(6){grid-column:9/13;grid-row:7/11}
+.tile:nth-child(7){grid-column:5/9;grid-row:9/13}
+.tile:nth-child(8){grid-column:1/5;grid-row:10/14}
+.tile-bg{
+  position:absolute;inset:0;transition:transform 1s var(--ease),filter 1s ease;
+  background:linear-gradient(145deg,#c7c2b7,#7b776f)
+}
+.tile:nth-child(2) .tile-bg{background:radial-gradient(circle at 70% 30%,#e9e7e0,transparent 25%),linear-gradient(135deg,#777a76,#d5d0c5)}
+.tile:nth-child(3) .tile-bg{background:linear-gradient(160deg,#ddd7cc,#8f8779 52%,#292a27)}
+.tile:nth-child(4) .tile-bg{background:linear-gradient(120deg,#8f918c,#d7d2c7)}
+.tile:nth-child(5) .tile-bg{background:radial-gradient(circle at 40% 35%,#eee9df 0 12%,transparent 13%),linear-gradient(130deg,#b4aea2,#484742)}
+.tile:nth-child(6) .tile-bg{background:linear-gradient(45deg,#2f302d,#b9b4a8)}
+.tile:nth-child(7) .tile-bg{background:linear-gradient(135deg,#ddd8cd,#a19b8e)}
+.tile:nth-child(8) .tile-bg{background:linear-gradient(145deg,#bab5aa,#5b5a55)}
+.tile:hover .tile-bg{transform:scale(1.08);filter:saturate(.7)}
+.tile-label{
+  position:absolute;left:16px;right:16px;bottom:14px;color:white;
+  display:flex;justify-content:space-between;font:9px "DM Mono",monospace;text-transform:uppercase;
+  mix-blend-mode:difference
+}
+.tile-label span:last-child{opacity:.6}
+.lightbox{
+  position:fixed;inset:0;background:rgba(18,18,17,.94);z-index:500;
+  display:grid;place-items:center;padding:5vw;opacity:0;pointer-events:none;transition:opacity .5s ease;
+}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox-card{width:min(1000px,90vw);max-height:90vh;display:grid;grid-template-columns:1.5fr 1fr;gap:3vw}
+.lightbox-image{min-height:65vh;background:linear-gradient(140deg,#cfc9bd,#484742)}
+.lightbox-copy{color:#eee;align-self:end}
+.lightbox-copy .section-label{color:#aaa}
+.lightbox-copy h4{font-size:clamp(2rem,4vw,4.5rem);letter-spacing:-.06em;line-height:.9;margin:15px 0}
+.lightbox-copy p{color:#aaa;line-height:1.6;font-size:13px}
+.close{position:absolute;top:28px;right:32px;color:#fff;font:10px "DM Mono",monospace;border:0;background:none;cursor:none}
+
+.about{
+  padding-top:18vh;padding-bottom:18vh;display:grid;grid-template-columns:1.4fr 1fr;gap:12vw
+}
+.about h2{font-size:clamp(3rem,7vw,8rem);letter-spacing:-.08em;line-height:.84;margin:0}
+.about h2 span{font-family:var(--serif);font-weight:400}
+.about-copy{max-width:450px;line-height:1.65;color:#5f5c55;font-size:14px}
+.practice{margin-top:60px;border-top:1px solid var(--line)}
+.practice-row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);font:10px "DM Mono",monospace;text-transform:uppercase}
+.practice-row i{font-style:normal;color:var(--muted)}
+
+.contact{
+  min-height:75vh;padding-top:12vh;padding-bottom:8vh;display:flex;flex-direction:column;justify-content:space-between;
+  background:var(--ink);color:var(--bg)
+}
+.contact-top{display:flex;justify-content:space-between}
+.contact h2{font-size:clamp(4rem,11vw,13rem);letter-spacing:-.09em;line-height:.75;margin:10vh 0 6vh;max-width:1200px}
+.contact h2 em{font-family:var(--serif);font-weight:400}
+.contact-link{
+  display:inline-flex;align-items:center;gap:14px;font:11px "DM Mono",monospace;text-transform:uppercase;
+  border-bottom:1px solid #777;padding-bottom:12px;transition:gap .45s var(--ease)
+}
+.contact-link:hover{gap:30px}
+.footer{border-top:1px solid #444;padding-top:18px;display:flex;justify-content:space-between;color:#8b8983;font:9px "DM Mono",monospace;text-transform:uppercase}
+
+.reveal{opacity:0;transform:translateY(35px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.word > span{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease)}
+.word.in > span{transform:none}
+
+@media (max-width:800px){
+  body{cursor:auto}
+  header{height:64px;padding:0 5vw}
+  .nav{gap:14px;font-size:9px}
+  section{padding-left:6vw;padding-right:6vw}
+  .hero{min-height:92svh;padding-bottom:9vh}
+  .hero-top{top:90px;left:6vw;right:6vw}
+  .hero h1{font-size:19vw}
+  .hero-sub{grid-template-columns:1fr;gap:22px;margin-top:28px}
+  .scroll-cue{right:6vw;bottom:4vh}
+  .intro{grid-template-columns:1fr;gap:50px;padding-top:15vh;padding-bottom:15vh}
+  .work{padding-top:8vh}
+  .work-head{align-items:start}
+  .index{display:none}
+  .project,.project.reverse{grid-template-columns:1fr;gap:35px;min-height:auto;padding:11vh 0}
+  .project.reverse .project-info,.project.reverse .visual{order:initial}
+  .visual{min-height:72vw;clip-path:inset(0)}
+  .project h3{font-size:18vw}
+  .pause{min-height:70vh;padding-top:15vh;padding-bottom:15vh}
+  .explore{padding-top:14vh}
+  .explore-head{grid-template-columns:1fr;gap:30px}
+  .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:38vw;gap:9px}
+  .tile,.tile:nth-child(n){grid-column:auto;grid-row:auto}
+  .tile:nth-child(3),.tile:nth-child(8){grid-row:span 2}
+  .tile:nth-child(1),.tile:nth-child(6){grid-row:span 2}
+  .lightbox-card{grid-template-columns:1fr;max-height:88vh}
+  .lightbox-image{min-height:48vh}
+  .about{grid-template-columns:1fr;gap:60px;padding-top:14vh;padding-bottom:14vh}
+  .contact{min-height:80vh}
+  .contact h2{font-size:20vw}
+  .footer{gap:20px;flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+
+/* Large project-title cursor: black negative/inverted effect */
+body.cursor-title .cursor {
+  width: 112px;
+  height: 112px;
+  background: var(--ink);
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+body.cursor-title .cursor::after {
+  content: "";
+  display: none;
+}
+
+
+/* THUMBNAIL-ONLY CURSOR */
+.project-thumbnail,.project-thumbnail img,img[data-cursor="project"]{cursor:none}
+.project-title,.project h2,.project-name,[data-project-title]{cursor:none}
+body.cursor-project .cursor{width:108px;height:108px;background:var(--ink);border-radius:50%}
+body.cursor-project .cursor::after{content:"VIEW PROJECT ↗";display:grid;place-items:center;width:100%;height:100%;color:#fff !important;font-size:10px;letter-spacing:.08em;text-align:center;white-space:nowrap}
+
+/* Clickable project thumbnails */
+.project-thumbnail { position:relative; }
+.project-thumbnail img,
+.project-thumbnail a { pointer-events:auto; }
+
+
+/* Per-project VIEW PROJECT button */
+.project-view-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  margin-top:18px;
+  padding:10px 0;
+  color:inherit;
+  text-decoration:none;
+  border-bottom:1px solid currentColor;
+  font-size:11px;
+  line-height:1;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  transition:opacity .25s ease, transform .25s ease;
+}
+.project-view-button:hover {
+  opacity:.65;
+  transform:translateY(-2px);
+}
+
+
+/* Project titles are NOT cursor-trigger areas. */
+.project h3,
+.project-title,
+.project-name,
+[data-project-title] {
+  cursor: none;
+}
+body.cursor-title .cursor {
+  width:7px !important;
+  height:7px !important;
+  background:#8b8983 !important;
+  border-radius:50% !important;
+  mix-blend-mode:normal !important;
+}
+body.cursor-title .cursor::after { display:none !important; }
+
+
+/* Header navigation uses the normal cursor only. */
+header a,
+nav a,
+.header a,
+.nav a,
+.menu a {
+  cursor: none;
+}
+
+
+/* Hero greeting */
+.hero-name {
+  font-weight: 700;
+  font-size: clamp(34px, 4vw, 58px);
+  line-height: 1.02;
+}
+.hero-logo-word {
+  font-weight: 800;
+}
+
+
+
+/* Simple hero greeting — no logo transition */
+.hero-name {
+  font-weight: 800;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  margin-bottom: 22px;
+}
+
+
+
+
+
+
+/* =========================================================
+   HERO ALIGNMENT — clean editorial grid
+   ========================================================= */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+.hero .hero-name,
+.hero .hero-greeting {
+  width: min(100%, 900px);
+  margin: 0 0 24px 0;
+  padding: 0;
+  text-align: left;
+  font-weight: 800 !important;
+  font-size: clamp(42px, 5.2vw, 76px) !important;
+  line-height: .98 !important;
+  letter-spacing: -.045em !important;
+}
+
+.hero .hero-sub,
+.hero .hero-description,
+.hero p {
+  width: min(100%, 760px);
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
+}
+
+.hero .hero-meta,
+.hero .meta,
+.hero .hero-tags {
+  width: 100%;
+  margin-top: 42px;
+  margin-left: 0;
+  margin-right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px 28px;
+  text-align: left;
+}
+
+.hero .hero-meta > *,
+.hero .meta > *,
+.hero .hero-tags > * {
+  margin: 0;
+  text-align: left;
+}
+
+/* Keep the hero's main text and metadata on the same left edge. */
+.hero .hero-name,
+.hero .hero-sub,
+.hero .hero-description,
+.hero .hero-meta,
+.hero .meta,
+.hero .hero-tags {
+  box-sizing: border-box;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .hero .hero-name,
+  .hero .hero-greeting {
+    width: 100%;
+    font-size: clamp(38px, 11vw, 56px) !important;
+    margin-bottom: 20px;
+  }
+
+  .hero .hero-sub,
+  .hero .hero-description,
+  .hero p {
+    width: 100%;
+  }
+
+  .hero .hero-meta,
+  .hero .meta,
+  .hero .hero-tags {
+    margin-top: 30px;
+    gap: 8px 18px;
+  }
+}
+
+
+/* =========================================================
+   CLEAN HERO GRID
+   ========================================================= */
+.hero {
+  position:relative;
+  min-height:92svh;
+  padding:0 5vw 9vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+
+.hero-top {
+  position:absolute;
+  top:90px;
+  left:5vw;
+  right:5vw;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
+  z-index:3;
+}
+
+.hero-top .eyebrow,
+.hero-top .meta {
+  position:static;
+  display:block;
+  margin:0;
+  white-space:nowrap;
+}
+
+.hero-copy {
+  position:relative;
+  width:100%;
+  max-width:1200px;
+  margin:0;
+  z-index:2;
+}
+
+.hero-sub {
+  width:100%;
+  max-width:1100px;
+  margin:0;
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) 220px;
+  column-gap:6vw;
+  align-items:end;
+  opacity:1;
+  transform:none;
+}
+
+.hero-main {
+  min-width:0;
+  max-width:850px;
+}
+
+.hero-name,
+.hero-greeting {
+  display:block;
+  width:auto;
+  margin:0 0 24px;
+  padding:0;
+  font-weight:800 !important;
+  font-size:clamp(42px, 5.2vw, 76px) !important;
+  line-height:.98 !important;
+  letter-spacing:-.045em !important;
+  text-align:left;
+  color:var(--ink);
+}
+
+.hero-statement {
+  max-width:760px;
+  margin:0;
+  padding:0;
+  font-size:clamp(19px, 2vw, 28px);
+  line-height:1.18;
+  letter-spacing:-.02em;
+  text-align:left;
+}
+
+.hero-side {
+  width:100%;
+  max-width:220px;
+  margin:0;
+  align-self:end;
+}
+
+.hero-meta,
+.hero-tags {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  align-items:baseline;
+  gap:9px 20px;
+  width:100%;
+  margin:0;
+  padding:0;
+  font:11px "DM Mono",monospace;
+  line-height:1.45;
+  text-align:left;
+}
+
+.hero-meta span,
+.hero-tags span {
+  display:block;
+  margin:0;
+  padding:0;
+  white-space:nowrap;
+}
+
+.scroll-cue {
+  position:absolute;
+  right:5vw;
+  bottom:9vh;
+  margin:0;
+  z-index:3;
+}
+
+@media (max-width:700px) {
+  .hero {
+    min-height:92svh;
+    padding:0 6vw 10vh;
+  }
+
+  .hero-top {
+    top:78px;
+    left:6vw;
+    right:6vw;
+  }
+
+  .hero-sub {
+    grid-template-columns:1fr;
+    row-gap:30px;
+  }
+
+  .hero-main {
+    max-width:100%;
+  }
+
+  .hero-name,
+  .hero-greeting {
+    font-size:clamp(38px, 11vw, 56px) !important;
+    margin-bottom:18px;
+  }
+
+  .hero-statement {
+    font-size:clamp(18px, 5vw, 23px);
+    max-width:100%;
+  }
+
+  .hero-side {
+    max-width:100%;
+  }
+
+  .hero-meta,
+  .hero-tags {
+    gap:8px 16px;
+  }
+
+  .scroll-cue {
+    right:6vw;
+    bottom:5vh;
+  }
+}
+
+
+.hero-meta.hero-tags {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  justify-content:flex-start;
+  gap:0;
+}
+.hero-meta.hero-tags i {
+  display:inline-block;
+  margin:0 10px;
+  font-style:normal;
+  opacity:.45;
+}
+
+
+
+
+/* DIXIT header logo: hidden through hero, visible from 01 / Approach onward. */
+header .logo {
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none;
+  transition:opacity .45s ease, visibility .45s ease;
+}
+body.show-header-logo header .logo {
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto;
+}
+
+
+/* =========================================================
+   STABLE FIRST PAINT
+   Hero typography renders in its final state immediately.
+   No intro font/weight/size flash on load or refresh.
+   ========================================================= */
+.hero .hero-name,
+.hero .hero-greeting {
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+  animation:none !important;
+  transition:none !important;
+  font-weight:800 !important;
+  font-size:clamp(42px, 5.2vw, 76px) !important;
+  line-height:.98 !important;
+  letter-spacing:-.045em !important;
+}
+.hero .hero-sub {
+  opacity:1 !important;
+  transform:none !important;
+}
+.hero .hero-statement {
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+  animation:none !important;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY FIRST-PAINT FIX
+   Google Fonts no longer swap from a fallback font after paint.
+   Hero typography has no initial size/weight/position animation.
+   ========================================================= */
+.hero h1 {
+  transform:none !important;
+  opacity:1 !important;
+  animation:none !important;
+  transition:none !important;
+}
+.hero-sub,
+.hero-sub p,
+.hero-side {
+  transform:none !important;
+  animation:none !important;
+}
+
+
+/* Contact section: solid black, no animated grain/noise overlay */
+#contact,
+.contact {
+  background: #000 !important;
+  background-image: none !important;
+}
+#contact::before,
+#contact::after,
+.contact::before,
+.contact::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+  background-image: none !important;
+  filter: none !important;
+}
+
+</style>
+<!-- EASY EDIT AREA: replace text/image paths here. Keep the keys unchanged. -->
+<script id="portfolio-content">
+window.PORTFOLIO_CONTENT={
+ projects:[
+ {number:"01",category:"Brand Strategy / Repositioning",title:"PROJECT TITLE ONE",description:"Short project description.",image:"images/project-01.jpg",link:"#"},
+ {number:"02",category:"Brand Identity / Visual System",title:"PROJECT TITLE TWO",description:"Short project description.",image:"images/project-02.jpg",link:"#"},
+ {number:"03",category:"Visual Identity / Communication",title:"PROJECT TITLE THREE",description:"Short project description.",image:"images/project-03.jpg",link:"#"},
+ {number:"04",category:"Packaging / Graphic Design",title:"PROJECT TITLE FOUR",description:"Short project description.",image:"images/project-04.jpg",link:"#"}
+ ],
+ explorations:[
+ {label:"CALLIGRAPHY",image:"images/exploration-01.jpg",description:"Add description here."},
+ {label:"PHOTOGRAPHY",image:"images/exploration-02.jpg",description:"Add description here."},
+ {label:"POTTERY",image:"images/exploration-03.jpg",description:"Add description here."},
+ {label:"DRAWING / MAKING",image:"images/exploration-04.jpg",description:"Add description here."}
+ ]
+};
+</script>
+</head>
+<body>
+<div class="cursor"></div>
+<div class="noise"></div>
+
+<header>
+  <a href="#top" class="logo magnetic">DIXIT</a>
+  <nav class="nav">
+    <a href="#work" class="magnetic">Work</a>
+    <a href="#explorations" class="magnetic">Explorations</a>
+    <a href="#about" class="magnetic">About</a>
+    <a href="#contact" class="magnetic">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+<section class="hero" id="top">
+  <div class="hero-top">
+    <span class="eyebrow">00 / Introduction</span>
+  </div>
+
+  <div class="hero-copy">
+    <div class="hero-sub">
+      <div class="hero-main">
+        <div class="hero-name hero-greeting">Hi, I'm DIXIT</div>
+        <p class="hero-statement">I work where strategy becomes visible — helping brands become clearer, stronger and more valuable.</p>
+      </div>
+
+      <div class="hero-side">
+        <div class="hero-meta hero-tags">
+  <span>Branding</span><i>/</i>
+  <span>Strategy</span><i>/</i>
+  <span>Positioning</span><i>/</i>
+  <span>Identity</span><i>/</i>
+  <span>Visual Communication</span>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">Scroll to explore</div>
+</section>
+
+
+
+<section class="intro reveal">
+  <div>
+    <div class="section-label">01 / Approach</div>
+    <p class="statement" style="margin-top:28px">Good design doesn't simply <em>make things look better.</em></p>
+  </div>
+  <div class="intro-detail">It helps people see value clearly. I work between strategy, positioning, identity and visual expression — finding what is already meaningful and giving it a sharper form.</div>
+</section>
+
+<section class="work" id="work">
+  <div class="work-head reveal">
+    <div><div class="section-label">02 / Selected Work</div><h2>A few things I've made clearer.</h2></div>
+    <div class="index"><span class="active">01</span><span>/</span><span>04</span></div>
+  </div>
+
+  <article class="project reveal">
+    <div class="project-info">
+      <div class="project-number">01 — Brand Strategy / Repositioning</div>
+      <h3>[Project<br>Name]</h3>
+      <div class="project-desc">A strategic identity exercise focused on finding the central value of a brand and translating it into a coherent visual direction.</div>
+      <div class="project-meta"><span>[Year]</span><span>Branding</span></div>
+      
+    </div>
+    <div class="visual project-thumbnail" data-cursor="project"><div class="visual-inner"></div></div>
+  </article>
+
+  <article class="project reverse reveal">
+    <div class="project-info">
+      <div class="project-number">02 — Brand Identity / Visual System</div>
+      <h3>[Project<br>Name]</h3>
+      <div class="project-desc">A visual identity system built to give an existing idea more consistency, recognition and room to grow.</div>
+      <div class="project-meta"><span>[Year]</span><span>Identity</span></div>
+      
+    </div>
+    <div class="visual v2 project-thumbnail" data-cursor="project"><div class="visual-inner"></div></div>
+  </article>
+</section>
+
+<section class="pause">
+  <div class="pause-inner reveal">
+    <div class="section-label">03 / Thought</div>
+    <p class="statement" style="margin-top:32px">The goal isn't to make a brand <em>louder.</em><br>It's to make the right things clearer.</p>
+    <div class="tiny">A quieter design can still make a stronger argument.</div>
+  </div>
+</section>
+
+<section class="work" style="padding-top:0">
+  <article class="project reveal">
+    <div class="project-info">
+      <div class="project-number">03 — Visual Identity / Communication</div>
+      <h3>[Project<br>Name]</h3>
+      <div class="project-desc">An exploration in visual language, hierarchy and communication — turning an idea into a system people can recognise.</div>
+      <div class="project-meta"><span>[Year]</span><span>Visual Identity</span></div>
+      
+    </div>
+    <div class="visual v3 project-thumbnail" data-cursor="project"><div class="visual-inner"></div></div>
+  </article>
+  <article class="project reverse reveal">
+    <div class="project-info">
+      <div class="project-number">04 — Packaging / Graphic Design</div>
+      <h3>[Project<br>Name]</h3>
+      <div class="project-desc">A packaging and graphic design study where physical touchpoints become part of the brand's larger visual story.</div>
+      <div class="project-meta"><span>[Year]</span><span>Packaging</span></div>
+      
+    </div>
+    <div class="visual v4 project-thumbnail" data-cursor="project"><div class="visual-inner"></div></div>
+  </article>
+</section>
+
+<section class="explore" id="explorations">
+  <div class="explore-head reveal">
+    <div><div class="section-label">04 / Explorations</div><h2 class="explore-title">Other ways of seeing.</h2></div>
+    <div class="explore-copy">Design isn't something I switch on when a project begins. I find it in making, observing, collecting and experimenting. This is the space outside the brief.</div>
+  </div>
+  <div class="grid">
+    <div class="tile reveal" data-title="Calligraphy" data-copy="Letterforms, rhythm and the discipline of making a mark deliberately."><div class="tile-bg"></div><div class="tile-label"><span>Calligraphy</span><span>01</span></div></div>
+    <div class="tile reveal" data-title="Photography" data-copy="Looking for framing, light, texture and small moments that usually disappear when you move too quickly."><div class="tile-bg"></div><div class="tile-label"><span>Photography</span><span>02</span></div></div>
+    <div class="tile reveal" data-title="Pottery" data-copy="Working with material makes form feel different: slower, more physical, less certain."><div class="tile-bg"></div><div class="tile-label"><span>Pottery</span><span>03</span></div></div>
+    <div class="tile reveal" data-title="Drawing / Making" data-copy="Fragments, studies and visual experiments that don't need to become a finished project to be useful."><div class="tile-bg"></div><div class="tile-label"><span>Making</span><span>04</span></div></div>
+    <div class="tile reveal" data-title="Photography II" data-copy="Another way of paying attention: collecting compositions before they become ideas."><div class="tile-bg"></div><div class="tile-label"><span>Photography</span><span>05</span></div></div>
+    <div class="tile reveal" data-title="Calligraphy Detail" data-copy="The detail, pressure and imperfection inside the mark."><div class="tile-bg"></div><div class="tile-label"><span>Calligraphy</span><span>06</span></div></div>
+    <div class="tile reveal" data-title="Pottery II" data-copy="Material, repetition and the relationship between control and accident."><div class="tile-bg"></div><div class="tile-label"><span>Pottery</span><span>07</span></div></div>
+    <div class="tile reveal" data-title="Other Exploration" data-copy="A changing collection of things made, noticed and kept."><div class="tile-bg"></div><div class="tile-label"><span>Other</span><span>08</span></div></div>
+  </div>
+  <div class="reveal" style="margin-top:90px;display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line);padding-bottom:22px">
+    <div class="statement" style="font-size:clamp(2rem,4vw,4.2rem);max-width:800px">Different tools. Different materials. The same curiosity.</div>
+    <div class="section-label">I like understanding things by making them.</div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="reveal"><div class="section-label">05 / About</div><h2 style="margin-top:32px">A designer<br>who <span>looks</span><br>closely.</h2></div>
+  <div class="about-copy reveal">
+    <p>Dixit is a communication designer working across branding, strategy, positioning and visual identity.</p>
+    <p>I am interested in the point where an idea becomes visible — where research becomes a decision, a decision becomes a system, and a system becomes something people can feel.</p>
+    <p>Outside client work, I keep making: calligraphy, photography, pottery, drawing and visual experiments. Not as a list of skills, but as ways of staying curious.</p>
+    <div class="practice">
+      <div class="practice-row"><span>01 — Brand Strategy</span><i>Thinking</i></div>
+      <div class="practice-row"><span>02 — Brand Positioning</span><i>Clarity</i></div>
+      <div class="practice-row"><span>03 — Brand Identity</span><i>Systems</i></div>
+      <div class="practice-row"><span>04 — Visual Identity</span><i>Expression</i></div>
+      <div class="practice-row"><span>05 — Rebranding</span><i>Change</i></div>
+      <div class="practice-row"><span>06 — Packaging</span><i>Physical</i></div>
+      <div class="practice-row"><span>07 — Graphic Design</span><i>Communication</i></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-top"><span class="section-label" style="color:#8b8983">06 / Contact</span><span class="meta">Open for selected collaborations</span></div>
+  <div>
+    <div class="section-label" style="color:#8b8983">Have a brand worth making clearer?</div>
+    <h2>Let's <em>talk.</em></h2>
+    <a class="contact-link magnetic" href="mailto:your@email.com">your@email.com ↗</a>
+  </div>
+  <div class="footer">
+    <span>DIXIT — Communication Designer</span>
+    <span>Branding / Strategy / Identity</span>
+    <span>© 2026</span>
+  </div>
+</section>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" id="closeLightbox">CLOSE ×</button>
+  <div class="lightbox-card">
+    <div class="lightbox-image" id="lightboxImage"></div>
+    <div class="lightbox-copy">
+      <div class="section-label">Exploration</div>
+      <h4 id="lightboxTitle"></h4>
+      <p id="lightboxText"></p>
+      <div class="meta" style="color:#777;margin-top:30px">Click outside to close</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+  // Cursor: small grey dot normally, expanding circular "VIEW PROJECT" state on projects
+  if(!reduce && window.matchMedia('(pointer:fine)').matches){
+    const dot=document.querySelector('.cursor');
+    let mx=innerWidth/2,my=innerHeight/2,dx=mx,dy=my;
+    window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+    const loop=()=>{
+      dx += (mx-dx)*.28; dy += (my-dy)*.28;
+      dot.style.left=dx+'px'; dot.style.top=dy+'px';
+      requestAnimationFrame(loop);
+    }; loop();
+    document.querySelectorAll('.project-thumbnail, .project-thumbnail img, img[data-cursor="project"]').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{document.body.classList.remove('cursor-cta','cursor-title');document.body.classList.add('cursor-project')});
+      el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-project'));
+    });
+    document.querySelectorAll('.view-link,.contact-link').forEach(el=>{
+      el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-cta'));
+      el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-cta'));
+    });
+  }
+
+  // Magnetic elements
+  if(!reduce){
+    document.querySelectorAll('.magnetic').forEach(el=>{
+      el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect(), x=e.clientX-(r.left+r.width/2), y=e.clientY-(r.top+r.height/2);
+        el.style.transform=`translate(${x*.16}px,${y*.16}px)`;
+      });
+      el.addEventListener('mouseleave',()=>el.style.transform='');
+    });
+  }
+
+  // Scroll reveals
+  const reveals=document.querySelectorAll('.reveal');
+  if(reduce) reveals.forEach(x=>x.classList.add('in'));
+  else{
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}
+      })
+    },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(x=>io.observe(x));
+  }
+
+  // Subtle parallax on project visuals
+  if(!reduce){
+    document.querySelectorAll('.project').forEach(project=>{
+      const visual=project.querySelector('.visual-inner');
+      project.addEventListener('mousemove',e=>{
+        const r=project.getBoundingClientRect(), px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+        visual.style.transform=`scale(1.045) translate(${px*2.5}%,${py*2.5}%)`;
+      });
+      project.addEventListener('mouseleave',()=>visual.style.transform='');
+    });
+  }
+
+  // Exploration lightbox
+  const lightbox=document.querySelector('#lightbox'), title=document.querySelector('#lightboxTitle'), text=document.querySelector('#lightboxText'), image=document.querySelector('#lightboxImage');
+  document.querySelectorAll('.tile').forEach((tile,i)=>{
+    tile.addEventListener('click',()=>{
+      title.textContent=tile.dataset.title;
+      text.textContent=tile.dataset.copy;
+      const bg=getComputedStyle(tile.querySelector('.tile-bg')).backgroundImage;
+      image.style.backgroundImage=bg;
+      lightbox.classList.add('open');
+      document.body.style.overflow='hidden';
+    });
+  });
+  const close=()=>{
+    lightbox.classList.remove('open');
+    document.body.style.overflow='';
+  };
+  document.querySelector('#closeLightbox').addEventListener('click',close);
+  lightbox.addEventListener('click',e=>{if(e.target===lightbox)close()});
+  window.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+</script>
+
+<script>
+/* =========================================================
+   PORTFOLIO CONTENT BINDER
+   Edit only PORTFOLIO_CONTENT above.
+   ========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const data = window.PORTFOLIO_CONTENT;
+  if (!data) return;
+
+  const cards = document.querySelectorAll('.project');
+
+  cards.forEach((card, i) => {
+    const p = data.projects?.[i];
+    if (!p) return;
+
+    const title = card.querySelector('h3');
+    const number = card.querySelector('.project-number');
+    const desc = card.querySelector('.project-desc');
+    const visual = card.querySelector('.visual');
+    const inner = card.querySelector('.visual-inner');
+
+    if (title) title.innerHTML = String(p.title || '').replace(/\\n/g, '<br>');
+    if (number) number.textContent = `${p.number || String(i+1).padStart(2,'0')} — ${p.category || ''}`;
+    if (desc) desc.textContent = p.description || '';
+
+    if (inner && p.image) {
+      inner.style.backgroundImage = `url("${p.image}")`;
+      inner.style.backgroundSize = 'cover';
+      inner.style.backgroundPosition = 'center';
+      inner.style.backgroundRepeat = 'no-repeat';
+    }
+
+    // Make the entire thumbnail clickable.
+    if (visual && p.link && p.link !== '#') {
+      visual.setAttribute('role', 'link');
+      visual.setAttribute('tabindex', '0');
+      visual.setAttribute('aria-label', `View ${p.title || 'project'}`);
+      visual.addEventListener('click', () => { window.location.href = p.link; });
+      visual.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.location.href = p.link;
+        }
+      });
+    }
+
+    // Add the VIEW PROJECT button exactly once, inside project-info.
+    const info = card.querySelector('.project-info');
+    if (info && !info.querySelector('.project-view-button')) {
+      const a = document.createElement('a');
+      a.className = 'project-view-button view-link magnetic';
+      a.href = p.link || '#';
+      a.textContent = 'VIEW PROJECT ↗';
+      a.setAttribute('data-cursor', 'cta');
+      info.appendChild(a);
+    }
+  });
+
+  // Exploration data can also replace the existing tile backgrounds/copy.
+  document.querySelectorAll('.tile').forEach((tile, i) => {
+    const item = data.explorations?.[i];
+    if (!item) return;
+    tile.dataset.title = item.label || tile.dataset.title || '';
+    tile.dataset.copy = item.description || tile.dataset.copy || '';
+    const bg = tile.querySelector('.tile-bg');
+    if (bg && item.image) {
+      bg.style.backgroundImage = `url("${item.image}")`;
+      bg.style.backgroundSize = 'cover';
+      bg.style.backgroundPosition = 'center';
+    }
+  });
+
+  // Cursor behavior: thumbnail = black "VIEW PROJECT"; button/link = green arrow;
+  // project title = large negative/inverted black cursor.
+  if (window.matchMedia('(pointer:fine)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+
+    const setState = state => {
+      document.body.classList.remove('cursor-project','cursor-cta','cursor-title');
+      if (state) document.body.classList.add(state);
+    };
+
+    document.querySelectorAll('.project-thumbnail').forEach(el => {
+      el.addEventListener('mouseenter', () => setState('cursor-project'));
+      el.addEventListener('mouseleave', () => setState(null));
+    });
+    document.querySelectorAll('.view-link, .project-view-button, .contact-link').forEach(el => {
+      el.addEventListener('mouseenter', () => setState('cursor-cta'));
+      el.addEventListener('mouseleave', () => setState(null));
+    });
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+/* =========================================================
+   HEADER LOGO VISIBILITY
+   Invisible on initial hero. Becomes visible at 01 / Approach
+   and stays visible for everything below it.
+   ========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const logo = document.querySelector('header .logo');
+  const approach = [...document.querySelectorAll('section')].find(section =>
+    /01\s*\/\s*Approach/i.test(section.textContent)
+  );
+  if (!logo || !approach) return;
+
+  const updateLogo = () => {
+    const approachTop = approach.getBoundingClientRect().top;
+    const headerHeight = document.querySelector('header')?.offsetHeight || 64;
+
+    // Before Approach reaches the header: hidden.
+    // From that point onward: visible and stays visible.
+    document.body.classList.toggle(
+      'show-header-logo',
+      approachTop <= headerHeight + 8
+    );
+  };
+
+  updateLogo();
+  window.addEventListener('scroll', updateLogo, { passive:true });
+  window.addEventListener('resize', updateLogo);
+});
+</script>
+
+</body>
+</html>
